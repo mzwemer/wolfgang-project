@@ -1,0 +1,22 @@
+  .casubun {
+      stroke-width:.3px;
+      stroke:black;
+
+  }
+
+  .bords{
+    fill:none;
+    stroke-width:5px;
+    stroke:white;
+    shape-rendering:crispEdges;
+  }
+
+  .infor {
+	position:absolute;
+	background:white;
+  text:black;
+  margin-top:10px;
+}
+svg{
+  z-index:0;
+}
