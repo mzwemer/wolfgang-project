@@ -7,11 +7,6 @@
         </style>
     <body>
 
-
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-
   <!-- address input fields, TODO add google autocomplete example -->
      <table id="address">
       <tr>
@@ -41,79 +36,77 @@
 
   <script>
 
-/*
-https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
-https://tigerweb.geo.census.gov/ArcGIS/rest/services/TIGERweb/tigerWMS_Current/MapServer
+	function getDistricts(){
 
-Layers:
-115th Congressional Districts (54)
-2016 State Legislative Districts - Upper (56)
-2016 State Legislative Districts - Lower (58)
-*/
+	/*
+		https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
+		https://tigerweb.geo.census.gov/ArcGIS/rest/services/TIGERweb/tigerWMS_Current/MapServer
 
+		Layers:
+			115th Congressional Districts (54)
+			2016 State Legislative Districts - Upper (56)
+			2016 State Legislative Districts - Lower (58)
+	*/
 
+		var baseUrl = "https://geocoding.geo.census.gov/geocoder/geographies/address";
+		var benchmark = "Public_AR_Current";
+		var vintage = "Current_Current";
+		var layers = "54,56,58";
 
-function getDistricts(){
+		var street = document.getElementById('street_number').value;
+		var city = document.getElementById('locality').value;
+		var state = document.getElementById('administrative_area_level_1').value;
+		var zip = document.getElementById('postal_code').value;
 
-	var baseUrl = "https://geocoding.geo.census.gov/geocoder/geographies/address";
-	var benchmark = "Public_AR_Current";
-	var vintage = "Current_Current";
-	var layers = "54,56,58";
-
-
-	var street = document.getElementById('street_number').value;
-	var city = document.getElementById('locality').value;
-	var state = document.getElementById('administrative_area_level_1').value;
-	var zip = document.getElementById('postal_code').value;
+		var query = baseUrl + "?street=" + encodeURIComponent(street) + "&city=" + encodeURIComponent(city) + "&state=" + encodeURIComponent(state) + "&zip=" + zip + "&benchmark=" + benchmark + "&vintage=" + vintage + "&layers=" + encodeURIComponent(layers) + "&format=json";
 	
+		/*TEST
+		var street = '1661 15th St';
+		var city = 'San Francisco';
+		var state = 'California';
+		var zip = '94103';
 
+		var query =  "https://geocoding.geo.census.gov/geocoder/geographies/address?street=1661%2015th%20St&city=San%20Francisco&state=California&zip=94103&benchmark=Public_AR_Current&vintage=Current_Current&layers=54%2C56%2C58&format=json" ;
+		//generates sample_output_census.json
+		*/
 
-
-
-	//TEST
-	var street = '1661 15th St';
-	var city = 'San Francisco';
-	var state = 'California';
-	var zip = '94103';
-	//generates sample_output_census.json
-
-	var query = baseUrl + "?street=" + encodeURIComponent(street) + "&city=" + encodeURIComponent(city) + "&state=" + encodeURIComponent(state) + "&zip=" + zip + "&benchmark=" + benchmark + "&vintage=" + vintage + "&layers=" + encodeURIComponent(layers) + "&format=json";
-	console.log(query);
-
-	//if using ajax instead of d3.json 
-/*
-$.ajax({
-  url: baseURl,
-  data: {
-    street: street,
-    city: city,
-    state: state,
-    zip: zip,
-    benchmark: benchmark,
-    vintage: vintage,
-    layers: layers,
-    format: 'jsonp'
-  },
-  success: function( result ) {
-    console.log(result)
-    //TODO update map
-  }
-});
-*/
+		console.log(query);
+	
+		/*
+		//if using ajax instead of d3.json 
+		$.ajax({
+  			url: baseURl,
+  			data: {
+    			street: street,
+    			city: city,
+    			state: state,
+    			zip: zip,
+    			benchmark: benchmark,
+    			vintage: vintage,
+    			layers: layers,
+    			format: 'jsonp'
+  			},
+  			success: function( result ) {
+    			console.log(result)
+    			//TODO update map
+  			}
+		});
+		*/
 
 }
 
+	//map testing for fixed address
 
+	d3.json("/data/sample_output_census.json", function(data) {
+  		console.log(data);
+	});
 
-//map testing for fixed address
-
-d3.json("/data/sample_output_census.json", function(data) {
-  console.log(data);
-});
-
-//TODO create topoJSON files
+	//TODO create topoJSON files
 
   </script>
 
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
   </body>
