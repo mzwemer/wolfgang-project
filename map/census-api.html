@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+    <style>
+
+
+        </style>
+    <body>
+
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+
+
+  <div class="wolf-map"></div>
+
+
+  <script>
+
+/*
+https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
+https://tigerweb.geo.census.gov/ArcGIS/rest/services/TIGERweb/tigerWMS_Current/MapServer
+
+Layers:
+115th Congressional Districts (54)
+2016 State Legislative Districts - Upper (56)
+2016 State Legislative Districts - Lower (58)
+*/
+
+
+var address = "601+Pennsylvania+Ave%2C+San+Francisco%2C+CA+94107";  
+
+
+var url = "https://geocoding.geo.census.gov/geocoder/geographies/address?street=601+Pennsylvania+Ave&
+city=San+Francisco&state=CA&benchmark=Public_AR_Current&vintage=Current_Current&layer
+s=54,56,58&format=json"
+
+//TODO CORS
+//TODO create topoJSON files
+d3.json(url, function(data) {
+  console.log(data);
+});
+
+
+  </script>
+
+
+  </body>
