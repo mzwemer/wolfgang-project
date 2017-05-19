@@ -28,14 +28,15 @@ Layers:
 */
 
 
-//var address = "601+Pennsylvania+Ave%2C+San+Francisco%2C+CA+94107";  
+
+var address = "601+Pennsylvania+Ave%2C+San+Francisco%2C+CA+94107";  
 
 
 var url = "https://geocoding.geo.census.gov/geocoder/geographies/address?street=601+Pennsylvania+Ave&
 city=San+Francisco&state=CA&benchmark=Public_AR_Current&vintage=Current_Current&layer
 s=54,56,58&format=json"
 
-//TODO CORS
+//TODO CORS d3
 //TODO create topoJSON files
 d3.json(url, function(data) {
   console.log(data);
