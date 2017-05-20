@@ -69,7 +69,7 @@ var infor = d3.select("body")
     .style("visibility", "hidden");
 
 
-d3.json("./data/calAss1.json", function(cali) {
+d3.json("./data/mckenna_calAss1.json", function(cali) {
         var neighbors = topojson.neighbors(cali.objects.assemD2011.geometries);
         var districts = topojson.feature(cali, cali.objects.assemD2011).features;
 

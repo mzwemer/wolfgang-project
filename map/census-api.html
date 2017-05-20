@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-
+    <title>Place Autocomplete Address Form</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
     <style>
 
+.districts :hover {
+  fill: red;
+}
 
-        </style>
+.district-borders {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+    </style>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://d3js.org/topojson.v2.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <body>
 
+   <!-- TODO restore google autocomplete and style -->
   <!-- address input fields, TODO add google autocomplete example -->
      <table id="address">
       <tr>
@@ -29,24 +48,21 @@
         <td class="wideField"><input class="field" id="postal_code"></input></td>
       </tr>
     </table>
-    <button onClick= getDistricts()>Get Districts</button>
+    <button onClick=getDistricts()>Get Districts</button>
 
-  <div class="wolf-map"></div>
+  <div id="maps">
+  	<div id="district-map" width="400" height="600">
+
+	</div>
+
+  </div>
 
 
   <script>
 
 	function getDistricts(){
 
-	/*
-		https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
-		https://tigerweb.geo.census.gov/ArcGIS/rest/services/TIGERweb/tigerWMS_Current/MapServer
 
-		Layers:
-			115th Congressional Districts (54)
-			2016 State Legislative Districts - Upper (56)
-			2016 State Legislative Districts - Lower (58)
-	*/
 
 		var baseUrl = "https://geocoding.geo.census.gov/geocoder/geographies/address";
 		var benchmark = "Public_AR_Current";
@@ -66,7 +82,7 @@
 		var state = 'California';
 		var zip = '94103';
 
-		var query =  "https://geocoding.geo.census.gov/geocoder/geographies/address?street=1661%2015th%20St&city=San%20Francisco&state=California&zip=94103&benchmark=Public_AR_Current&vintage=Current_Current&layers=54%2C56%2C58&format=json" ;
+		var query =  "https://geocoding.geo.census.gov/geocoder/geographies/address?street=1661%2015th%20St&city=San%20Francisco&state=California&zip=94103&benchmark=Public_AR_Current&vintage=Current_Current&layers=54%2C56%2C58&format=jsonp" ;
 		//generates sample_output_census.json
 		*/
 
@@ -93,20 +109,42 @@
 		});
 		*/
 
-}
+	}
 
+	//TODO render simple maps
+
+var svg = d3.select("#district-map").append("svg:svg");
+
+var path = d3.geoPath();
+
+
+d3.json("/data/ca-cd115-albers-id-topo-sq.json", function(error, us) {
+  if (error) throw error;
+
+  svg.append("g")
+      .attr("class", "districts")
+    .selectAll("path")
+    .data(topojson.feature(topology, topology.objects.cd115).features)
+    .enter().append("path")
+      .attr("d", path);
+
+  svg.append("path")
+      .attr("class", "district-borders")
+      .attr("d", path(topojson.mesh(topology, topology.objects.cd115, function(a, b) { return a !== b; })));
+});
+
+
+
+	/*
 	//map testing for fixed address
-
 	d3.json("/data/sample_output_census.json", function(data) {
   		console.log(data);
 	});
-
-	//TODO create topoJSON files
+ 	*/
 
   </script>
 
-	<script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src="http://d3js.org/topojson.v1.min.js"></script>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+
 
   </body>

@@ -1,0 +1,36 @@
+shp2json cb_2016_06_sldu_500k/cb_2016_06_sldu_500k.shp -o ca-sldu.json
+shp2json cb_2016_06_sldl_500k/cb_2016_06_sldl_500k.shp -o ca-sldl.json
+shp2json cb_2016_us_cd115_500k/cb_2016_us_cd115_500k.shp -o cd115.json
+
+
+geoproject 'd3.geoConicEqualArea().parallels([34, 40.5]).rotate([120, 0]).fitSize([960, 960], d)' < ca-sldu.json > ca-sldu-albers.json
+geoproject 'd3.geoConicEqualArea().parallels([34, 40.5]).rotate([120, 0]).fitSize([960, 960], d)' < ca-sldl.json > ca-sldl-albers.json
+geoproject 'd3.geoConicEqualArea().parallels([34, 40.5]).rotate([120, 0]).fitSize([960, 960], d)' < cd115.json > cd115-albers.json
+
+ndjson-split 'd.features' < ca-sldu-albers.json > ca-sldu-albers.ndjson
+ndjson-split 'd.features' < ca-sldl-albers.json  > ca-sldl-albers.ndjson
+ndjson-split 'd.features' < cd115-albers.json  > cd115-albers.ndjson
+
+ndjson-map 'd.id = d.properties.GEOID.slice(2), d' < ca-sldu-albers.ndjson > ca-sldu-albers-id.ndjson
+ndjson-map 'd.id = d.properties.GEOID.slice(2), d' < ca-sldl-albers.ndjson > ca-sldl-albers-id.ndjson
+ndjson-map 'd.id = d.properties.GEOID.slice(2), d' < cd115-albers.ndjson > cd115-albers-id.ndjson
+
+
+ndjson-filter 'd.properties.STATEFP === "06"' < cd115-albers-id.ndjson > ca-cd115-albers-id.ndjson
+
+
+//join in outside data here
+
+ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' < ca-sldu-albers-id.ndjson  > ca-sldu-albers-id.json
+ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' < ca-sldl-albers-id.ndjson  > ca-sldl-albers-id.json
+ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' < ca-cd115-albers-id.ndjson > ca-cd115-albers-id.json
+
+geo2topo -n sldu=ca-sldu-albers-id.ndjson  > ca-sldu-albers-id-topo.json
+toposimplify -p 1 -f < ca-sldu-albers-id-topo.json  > ca-sldu-albers-id-topo-simple.json
+topoquantize 1e5 < ca-sldu-albers-id-topo-simple.json > ca-sldu-albers-id-topo-sq.json
+geo2topo -n sldl=ca-sldl-albers-id.ndjson  > ca-sldl-albers-id-topo.json
+toposimplify -p 1 -f < ca-sldl-albers-id-topo.json  > ca-sldl-albers-id-topo-simple.json
+topoquantize 1e5 < ca-sldl-albers-id-topo-simple.json > ca-sldl-albers-id-topo-sq.json
+geo2topo -n cd115=ca-cd115-albers-id.ndjson  > ca-cd115-albers-id-topo.json
+toposimplify -p 1 -f < ca-cd115-albers-id-topo.json  > ca-cd115-albers-id-topo-simple.json
+topoquantize 1e5 < ca-cd115-albers-id-topo-simple.json > ca-cd115-albers-id-topo-sq.json

@@ -1,0 +1,118 @@
+{
+   "result":{
+      "input":{
+         "address":{
+            "state":"California",
+            "zip":"94103",
+            "city":"San Francisco",
+            "street":"1661 15th St"
+         },
+         "vintage":{
+            "id":"4",
+            "vintageDescription":"Current Vintage - Current Benchmark",
+            "vintageName":"Current_Current",
+            "isDefault":true
+         },
+         "benchmark":{
+            "id":"4",
+            "benchmarkName":"Public_AR_Current",
+            "benchmarkDescription":"Public Address Ranges - Current Benchmark",
+            "isDefault":false
+         }
+      },
+      "addressMatches":[
+         {
+            "matchedAddress":"1661 15TH ST, SAN FRANCISCO, CA, 94103",
+            "coordinates":{
+               "x":-122.421135,
+               "y":37.76659
+            },
+            "tigerLine":{
+               "tigerLineId":"192284213",
+               "side":"L"
+            },
+            "addressComponents":{
+               "fromAddress":"1657",
+               "toAddress":"1699",
+               "preQualifier":"",
+               "preDirection":"",
+               "preType":"",
+               "streetName":"15TH",
+               "suffixType":"ST",
+               "suffixDirection":"",
+               "suffixQualifier":"",
+               "state":"CA",
+               "zip":"94103",
+               "city":"SAN FRANCISCO"
+            },
+            "geographies":{
+               "2016 State Legislative Districts - Upper":[
+                  {
+                     "OID":212904690192924,
+                     "STATE":"06",
+                     "FUNCSTAT":"N",
+                     "NAME":"State Senate District 11",
+                     "AREAWATER":509989394,
+                     "LSADC":"LU",
+                     "CENTLON":"-122.6747082",
+                     "LDTYP":"O",
+                     "BASENAME":"11",
+                     "INTPTLAT":"+37.7268594",
+                     "SLDU":"011",
+                     "MTFCC":"G5210",
+                     "LSY":"2016",
+                     "GEOID":"06011",
+                     "CENTLAT":"+37.7526520",
+                     "INTPTLON":"-122.5058485",
+                     "AREALAND":156002245,
+                     "OBJECTID":989
+                  }
+               ],
+               "2016 State Legislative Districts - Lower":[
+                  {
+                     "OID":213904690192968,
+                     "MTFCC":"G5220",
+                     "FUNCSTAT":"N",
+                     "STATE":"06",
+                     "AREAWATER":130318269,
+                     "NAME":"Assembly District 17",
+                     "SLDL":"017",
+                     "LSY":"2016",
+                     "LSADC":"L3",
+                     "CENTLON":"-122.3853558",
+                     "GEOID":"06017",
+                     "CENTLAT":"+37.7869943",
+                     "LDTYP":"O",
+                     "INTPTLON":"-122.3864570",
+                     "AREALAND":62720993,
+                     "BASENAME":"17",
+                     "INTPTLAT":"+37.7865796",
+                     "OBJECTID":744
+                  }
+               ],
+               "115th Congressional Districts":[
+                  {
+                     "OID":211904492478597,
+                     "STATE":"06",
+                     "FUNCSTAT":"N",
+                     "NAME":"Congressional District 12",
+                     "AREAWATER":211581427,
+                     "CDSESSN":"115",
+                     "LSADC":"C2",
+                     "CENTLON":"-122.4347034",
+                     "BASENAME":"12",
+                     "INTPTLAT":"+37.7855141",
+                     "MTFCC":"G5200",
+                     "GEOID":"0612",
+                     "CENTLAT":"+37.7853375",
+                     "CD115":"12",
+                     "INTPTLON":"-122.4340005",
+                     "AREALAND":101086653,
+                     "OBJECTID":118
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
