@@ -51,7 +51,7 @@
     <button onClick=getDistricts()>Get Districts</button>
 
   <div id="maps">
-  	<div id="district-map" width="400" height="600">
+  	<div id="district-map" height="960" width="600">
 
 	</div>
 
@@ -118,19 +118,19 @@ var svg = d3.select("#district-map").append("svg:svg");
 var path = d3.geoPath();
 
 
-d3.json("/data/ca-cd115-albers-id-topo-sq.json", function(error, us) {
+d3.json("/data/ca-cd115-albers-id-topo-sq.json", function(error, ca) {
   if (error) throw error;
 
   svg.append("g")
       .attr("class", "districts")
     .selectAll("path")
-    .data(topojson.feature(topology, topology.objects.cd115).features)
+    .data(topojson.feature(ca, ca.objects.cd115).features)
     .enter().append("path")
       .attr("d", path);
 
   svg.append("path")
       .attr("class", "district-borders")
-      .attr("d", path(topojson.mesh(topology, topology.objects.cd115, function(a, b) { return a !== b; })));
+      .attr("d", path(topojson.mesh(ca, ca.objects.cd115, function(a, b) { return a !== b; })));
 });
 
 
