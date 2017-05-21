@@ -16,9 +16,7 @@ ndjson-map 'd.id = d.properties.GEOID.slice(2), d' < ca-sldl-albers.ndjson > ca-
 ndjson-map 'd.id = d.properties.GEOID.slice(2), d' < ca-cd115-albers.ndjson > ca-cd115-albers-id.ndjson
 
 
-
-
-//join in outside data here
+//join in outside data here by id  
 
 
 geo2topo -n sldu=ca-sldu-albers-id.ndjson districts=ca-cd115-albers-id.ndjson sldl=ca-sldl-albers-id.ndjson > topo.json
